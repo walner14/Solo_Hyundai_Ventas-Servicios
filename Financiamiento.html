@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financiamiento - SOLO HYUNDAI</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="Financiamiento.css" />
+  <script>
+    const modelos = {
+      "Hyundai Santa Fe": { precioUSD: 37000, inicialUSD: 5000 },
+      "Hyundai Tucson": { precioUSD: 32000, inicialUSD: 4000 },
+      "Hyundai Elantra": { precioUSD: 26000, inicialUSD: 3000 },
+      "Hyundai Grand i10": { precioUSD: 17000, inicialUSD: 2000 },
+      "Hyundai Palisade": { precioUSD: 45000, inicialUSD: 6000 }
+    };
+
+    const bancos = {
+      "Banreservas": 11.5,
+      "Popular": 12.0,
+      "BHD": 12.5,
+      "Scotiabank": 13.0,
+      "APAP": 11.8
+    };
+
+    const tasaCambio = 58.75; // tasa dólar actual (modificable)
+
+    function actualizarModelo() {
+      const modelo = document.getElementById('modelo').value;
+      if (modelo && modelos[modelo]) {
+        const montoRD = modelos[modelo].precioUSD * tasaCambio;
+        const inicialRD = modelos[modelo].inicialUSD * tasaCambio;
+        document.getElementById('monto').value = (montoRD - inicialRD).toFixed(2);
+        document.getElementById('inicial').value = inicialRD.toFixed(2);
+      }
+    }
+
+    function actualizarTasa() {
+      const banco = document.getElementById('banco').value;
+      if (banco && bancos[banco]) {
+        document.getElementById('interes').value = bancos[banco];
+      }
+    }
+
+    function setPlazo(valor) {
+      document.getElementById('plazo').value = valor * 12;
+    }
+
+    function calcularCuota() {
+      const monto = parseFloat(document.getElementById('monto').value);
+      const tasa = parseFloat(document.getElementById('interes').value) / 100 / 12;
+      const plazo = parseInt(document.getElementById('plazo').value);
+
+      if (monto && tasa && plazo) {
+        const cuota = (monto * tasa) / (1 - Math.pow(1 + tasa, -plazo));
+        document.getElementById('resultado').textContent = 'Cuota mensual: RD$ ' + cuota.toFixed(2);
+      } else {
+        document.getElementById('resultado').textContent = 'Por favor, complete todos los campos.';
+      }
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="social-header">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div class="logo-title">
+      <img src="img/Logo.png" class="logo-hyundai" alt="Hyundai Logo" />
+      <div>
+        <h1>SOLO HYUNDAI</h1>
+        <p>Distribuidor Autorizado Hyundai en RD</p>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="Catalogo.html">Catálogo</a></li>
+       <li><a href="Financiamiento.html"class="active">Financiamiento</a></li>
+      <li><a href="Servicios.html">Servicios</a></li>
+    </ul>
+  </nav>
+
+  <main class="contenido">
+    <section class="form-box">
+      <h2>Simulador de Financiamiento</h2>
+      <p>Calcula tu cuota mensual en pesos dominicanos.</p>
+
+      <form onsubmit="event.preventDefault(); calcularCuota();">
+        <label for="modelo">Modelo:</label>
+        <select id="modelo" onchange="actualizarModelo()" required>
+          <option value="">Seleccione</option>
+          <option>Hyundai Santa Fe</option>
+          <option>Hyundai Tucson</option>
+          <option>Hyundai Elantra</option>
+          <option>Hyundai Grand i10</option>
+          <option>Hyundai Palisade</option>
+        </select>
+
+        <label for="inicial">Monto inicial (RD$):</label>
+        <input type="number" id="inicial" readonly />
+
+        <label for="monto">Monto del préstamo (RD$):</label>
+        <input type="number" id="monto" required />
+
+        <label for="banco">Banco:</label>
+        <select id="banco" onchange="actualizarTasa()" required>
+          <option value="">Seleccione</option>
+          <option>Banreservas</option>
+          <option>Popular</option>
+          <option>BHD</option>
+          <option>Scotiabank</option>
+          <option>APAP</option>
+        </select>
+
+        <label for="interes">Tasa de interés anual (%):</label>
+        <input type="number" id="interes" step="0.1" readonly required />
+
+        <label for="plazo">Plazo (meses):</label>
+        <input type="number" id="plazo" readonly required />
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+          <button type="button" class="btn" onclick="setPlazo(1)">1 año</button>
+          <button type="button" class="btn" onclick="setPlazo(2)">2 años</button>
+          <button type="button" class="btn" onclick="setPlazo(3)">3 años</button>
+          <button type="button" class="btn" onclick="setPlazo(4)">4 años</button>
+          <button type="button" class="btn" onclick="setPlazo(5)">5 años</button>
+          <button type="button" class="btn" onclick="setPlazo(6)">6 años</button>
+          <button type="button" class="btn" onclick="setPlazo(7)">7 años</button>
+          <button type="button" class="btn" onclick="setPlazo(8)">8 años</button>
+          <button type="button" class="btn" onclick="setPlazo(9)">9 años</button>
+        </div>
+
+        <button type="submit" class="btn">Calcular</button>
+        <p id="resultado"></p>
+      </form>
+    </section>
+
+    <section class="form-box">
+      <h2>Solicitar Cotización</h2>
+      <form>
+        <label>Nombre:</label>
+        <input type="text" required />
+
+        <label>Apellido:</label>
+        <input type="text" required />
+
+        <label>Teléfono:</label>
+        <input type="tel" required />
+
+        <label>Correo Electrónico:</label>
+        <input type="email" required />
+
+        <label>Provincia:</label>
+        <select required>
+          <option value="">Seleccione</option>
+          <option>Distrito Nacional</option>
+          <option>Santo Domingo</option>
+          <option>Santiago</option>
+          <option>La Vega</option>
+          <option>San Cristóbal</option>
+          <option>Puerto Plata</option>
+          <option>San Pedro de Macorís</option>
+          <option>La Romana</option>
+          <option>Duarte</option>
+          <option>Espaillat</option>
+        </select>
+
+        <label>Moneda:</label>
+        <select required>
+          <option value="">Seleccione</option>
+          <option>RD$ - Peso Dominicano</option>
+          <option>US$ - Dólar</option>
+        </select>
+
+        <label>Presupuesto para compra:</label>
+        <input type="number" required />
+
+        <label>Vehículo de Interés:</label>
+        <select required>
+          <option value="">Seleccione</option>
+          <option>Hyundai Santa Fe</option>
+          <option>Hyundai Tucson</option>
+          <option>Hyundai Palisade</option>
+          <option>Hyundai Grand i10</option>
+          <option>Hyundai Elantra</option>
+          <option>Hyundai Sonata</option>
+          <option>Hyundai Accent</option>
+        </select>
+
+        <label>Tiempo estimado de compra:</label>
+        <select required>
+          <option value="">Seleccione</option>
+          <option value="<30">Menos de 30 días</option>
+          <option value=">30">Más de 30 días</option>
+          <option value=">180">Más de 180 días</option>
+        </select>
+
+        <button type="submit" class="btn">Enviar Cotización</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 SOLO HYUNDAI - Todos los derechos reservados</p>
+    <div class="social-footer">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+  </footer>
+
+</body>
+</html>
