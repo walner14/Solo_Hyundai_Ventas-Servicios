@@ -2,14 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <!-- Fuentes y Estilos -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="Inicio.css" />
-  
-  <title>SOLO HYUNDAI - Distribuidor Autorizado</title>
+  <meta name="viewport"content="width=device-width, initial-scale=1.0" />
+  <title>Inicio</title>
+  <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"rel="stylesheet" />
+  <link rel="stylesheet" href="Inicio.css"/>
 </head>
 <body>
 
@@ -32,14 +29,34 @@
   </header>
 
   <!-- ======= NAVEGACIÓN ======= -->
-  <nav>
-    <ul>
-      <li><a href="index.html" class="active">Inicio</a></li>
-      <li><a href="Catalogo.html">Catálogo</a></li>
-      <li><a href="Financiamiento.html">Financiamiento</a></li>
-      <li><a href="Servicios.html">Servicios</a></li>
+   
+ <nav class="navbar">
+  <div class="nav-container">
+    <div class="menu-toggle" id="mobile-menu"><i class="fas fa-bars"></i>
+    </div>
+    <ul class="nav-menu">
+      <li><a href="index.html"class="active"><i class="fa-car-side"></i>Inicio</a></li>
+      <li><a href="Catalogo.html"><i class="fas fa-car"></i> Catálogo</a></li>
+      <li><a href="Financiamiento.html"><i class="fas fa-hand-holding-usd"></i> Financiamiento</a></li>
+      <li><a href="Servicios.html"><i class="fas fa-tools"></i> Servicios</a></li>
     </ul>
-  </nav>
+  </div>
+</nav>
+
+
+<script>
+  // Seleccionamos el botón hamburguesa y el menú
+
+  const mobileMenuBtn = document.getElementById('mobile-menu');
+  const navMenu       = document.querySelector('.nav-menu');
+
+  // Al hacer clic, alternamos la clase 'active' en el menú
+  
+  mobileMenuBtn.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
+</script>
+
 
   <!-- ======= SECCIÓN HERO ======= -->
 
@@ -49,27 +66,61 @@
       <p>Explora y compra tu Hyundai soñado.</p>
     </div>
 
-
-
-      <div class="hero-content">
+    
+<div class="hero-content">
         <div class="hero-buttons">
-          <a href="#" class="btn-hero">Agendar Cita</a>
+          <a href="#" class="btn-hero btn-outline">Agendar Cita</a>
           <a href="#" class="btn-hero btn-outline">Conocer Más</a>
-          <a href="#" class="btn-hero">Agendar Test Drive</a>
+          <a href="#" class="btn-hero btn-outline">Agendar Test Drive</a>
         </div>
       </div>
 </section>
+      
+<div class="galleries-grid">
+
+  <!-- Bloque 1 -->
+
+  <div class="gallery-block">
+    <h2 class="gallery-title">SUVs</h2>
+    <div class="gallery">
+      <img src="img/Catalogo/SUVs/Palisade/Hyundai-Palisade-2024.png" alt="Palisade">
+      <img src="img/Catalogo/SUVs/Santa Fe/Hyundai-Santa-Fe-2024_.png" alt="Santa-Fe">
+      <img src="img/Catalogo/SUVs/Tucson/Hyundai-Tucson-2024.png" alt="Tucson">
+      
+    </div>
+  </div>
+
+  <!-- Bloque 2 -->
+
+  <div class="gallery-block">
+    <h2 class="gallery-title">Carros</h2>
+    <div class="gallery">
+       <img src="img/Catalogo/Carros/Accent.png" alt="Accent">
+      <img src="img/Catalogo/Carros/Grand i10.png" alt="Grand i10">
+      
+    </div>
+  </div>
+
+  <!-- Bloque 3 -->
+   
+  <div class="gallery-block">
+    <h2 class="gallery-title">Comerciales</h2>
+    <div class="gallery">
+       <img src="img/Catalogo/Comerciales/Staria.png" alt="Staria">
+      <img src="img/Catalogo/Comerciales/HD50-78.png" alt="HD50-78">
+      <img src="img/Catalogo/Comerciales/County.png" alt="County">
+    </div>
+  </div>
+</div>
+
+  
+      </section>
+        <section class="publicidad">
+          <h2>Diseño,tecnología y rendimiento excepcionales en cada modelo.</h2>
+          <p>Vive la experiencia de manejar un Hyundai hoy mismo.</p>
+        </section>
 
 
-  <section class="publicidad">
-    <h2>Descubre la Nueva Generación Hyundai</h2>
-    <p>Diseño, tecnología y rendimiento excepcionales en cada modelo. Vive la experiencia de manejar un Hyundai hoy mismo.</p>
-  </section>
-
-  <!-- ======= CARRUSEL DE VEHÍCULOS ======= -->
-
-  <section class="carrusel">
-    <div class="carousel-container">
 
       <!-- Slide 1 -->
 
@@ -93,7 +144,7 @@
 
       <!-- Slide 3 -->
 
-      <div class="slide">
+      <div class="slide 3">
         <img src="img/Inicio/Tucson.png" alt="Hyundai Tucson" />
         <div class="texto-slide">
           <h2>Hyundai Tucson</h2>
@@ -103,7 +154,7 @@
 
       <!-- Slide 4 -->
 
-      <div class="slide">
+      <div class="slide 4">
         <img src="img/Inicio/Kona.png" alt="Hyundai Kona" />
         <div class="texto-slide">
           <h2>Hyundai Kona</h2>
@@ -111,7 +162,9 @@
         </div>
       </div>
 
-    </div>
+</div>
+
+
 
 
 
@@ -129,3 +182,4 @@
 
 </body>
 </html>
+
