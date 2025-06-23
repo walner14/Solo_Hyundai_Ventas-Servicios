@@ -2,66 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Financiamiento - SOLO HYUNDAI</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="Financiamiento.css" />
-  <script>
-    const modelos = {
-      "Hyundai Santa Fe": { precioUSD: 37000, inicialUSD: 5000 },
-      "Hyundai Tucson": { precioUSD: 32000, inicialUSD: 4000 },
-      "Hyundai Elantra": { precioUSD: 26000, inicialUSD: 3000 },
-      "Hyundai Grand i10": { precioUSD: 17000, inicialUSD: 2000 },
-      "Hyundai Palisade": { precioUSD: 45000, inicialUSD: 6000 }
-    };
-
-    const bancos = {
-      "Banreservas": 11.5,
-      "Popular": 12.0,
-      "BHD": 12.5,
-      "Scotiabank": 13.0,
-      "APAP": 11.8
-    };
-
-    const tasaCambio = 58.75; // tasa dólar actual (modificable)
-
-    function actualizarModelo() {
-      const modelo = document.getElementById('modelo').value;
-      if (modelo && modelos[modelo]) {
-        const montoRD = modelos[modelo].precioUSD * tasaCambio;
-        const inicialRD = modelos[modelo].inicialUSD * tasaCambio;
-        document.getElementById('monto').value = (montoRD - inicialRD).toFixed(2);
-        document.getElementById('inicial').value = inicialRD.toFixed(2);
-      }
-    }
-
-    function actualizarTasa() {
-      const banco = document.getElementById('banco').value;
-      if (banco && bancos[banco]) {
-        document.getElementById('interes').value = bancos[banco];
-      }
-    }
-
-    function setPlazo(valor) {
-      document.getElementById('plazo').value = valor * 12;
-    }
-
-    function calcularCuota() {
-      const monto = parseFloat(document.getElementById('monto').value);
-      const tasa = parseFloat(document.getElementById('interes').value) / 100 / 12;
-      const plazo = parseInt(document.getElementById('plazo').value);
-
-      if (monto && tasa && plazo) {
-        const cuota = (monto * tasa) / (1 - Math.pow(1 + tasa, -plazo));
-        document.getElementById('resultado').textContent = 'Cuota mensual: RD$ ' + cuota.toFixed(2);
-      } else {
-        document.getElementById('resultado').textContent = 'Por favor, complete todos los campos.';
-      }
-    }
-  </script>
+  <meta name="viewport"content="width=device-width, initial-scale=1.0" />
+  <title>Financiamiento</title>
+  <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"rel="stylesheet" />
+  <link rel="stylesheet" href="Financiamiento.css"/>
 </head>
 <body>
+
+  <!-- ======= HEADER ======= -->
   <header>
     <div class="social-header">
       <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -69,8 +18,9 @@
       <a href="#"><i class="fab fa-twitter"></i></a>
       <a href="#"><i class="fab fa-youtube"></i></a>
     </div>
+
     <div class="logo-title">
-      <img src="img/Logo.png" class="logo-hyundai" alt="Hyundai Logo" />
+      <img src="img/Logo.png" alt="Hyundai Logo" class="logo-hyundai" />
       <div>
         <h1>SOLO HYUNDAI</h1>
         <p>Distribuidor Autorizado Hyundai en RD</p>
@@ -78,16 +28,96 @@
     </div>
   </header>
 
-  <nav>
-    <ul>
-      <li><a href="index.html">Inicio</a></li>
-      <li><a href="Catalogo.html">Catálogo</a></li>
-       <li><a href="Financiamiento.html"class="active">Financiamiento</a></li>
-      <li><a href="Servicios.html">Servicios</a></li>
+  <!-- ======= NAVEGACIÓN ======= -->
+   
+ <nav class="navbar">
+  <div class="nav-container">
+    <div class="menu-toggle" id="mobile-menu"><i class="fas fa-bars"></i>
+    </div>
+    <ul class="nav-menu">
+      <li><a href="index.html"><i class="fa-car-side"></i>Inicio</a></li>
+      <li><a href="Catalogo.html"><i class="fas fa-car"></i> Catálogo</a></li>
+      <li><a href="Financiamiento.html"class="active"><i class="fas fa-hand-holding-usd"></i> Financiamiento</a></li>
+      <li><a href="Servicios.html"><i class="fas fa-tools"></i> Servicios</a></li>
     </ul>
-  </nav>
+  </div>
+</nav>
 
-  <main class="contenido">
+<script>
+  // Seleccionamos el botón hamburguesa y el menú
+
+  const mobileMenuBtn = document.getElementById('mobile-menu');
+  const navMenu       = document.querySelector('.nav-menu');
+
+  // Al hacer clic, alternamos la clase 'active' en el menú
+  
+  mobileMenuBtn.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
+</script>
+
+
+
+  <!-- ======= SECCIÓN HERO ======= -->
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Haz Realidad el Sueño de Tener un Hyundai</h1>
+      <p>Planes flexibles, aprobaciones rápidas y la ruta directa a tu nuevo Hyundai.</p>
+    </div>
+  </section>
+
+            <!-- Showcase de carros -->
+
+<section  class="vehicle-showcase">
+    <h3 class="showcase-title">Vehículos Disponibles</h3>
+    <div class="vehicle-container">
+        <div class="vehicle-card">
+            <img src="img/Financiamiento/i10.png" alt="Nuevo Grand i10">
+            <div class="vehicle-info">
+                <h4>Nuevo Grand i10</h4>
+                <p>Desde US$ 25,990</p>
+            </div>
+        </div>
+        <div class="vehicle-card">
+            <img src="img/Financiamiento/Kona.png" alt="Nuevo KONA Gasolina">
+            <div class="vehicle-info">
+                <h4>Nuevo KONA Gasolina</h4>
+                <p>Desde US$ 34,900</p>
+            </div>
+        </div>
+        <div class="vehicle-card">
+            <img src="img/Financiamiento/Palisade.png" alt="Deportivo Velocity">
+            <div class="vehicle-info">
+                <h4>Nuevo Palisade</h4>
+                <p>Desde US$ 82,9000</p>
+            </div>
+        </div>
+        <div class="vehicle-card">
+            <img src="img/Financiamiento/Santa-Fe.png" alt="Nuevo Santa Fe">
+            <div class="vehicle-info">
+                <h4>Nuevo Santa Fe</h4>
+                <p>Desde $59,900</p>
+            </div>
+        </div>
+        <div class="vehicle-card">
+            <img src="img/Financiamiento/Tucson.png" alt="Nuevo Tucson 2.0 FL">
+            <div class="vehicle-info">
+                <h4>Nuevo Tucson 2.0 FL</h4>
+                <p>Desde $41,900</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="ver-catalogo">
+    <h1>¡Visita Nuestro Catalogo!</h1>
+    <p>Encuentra el Vehiculo de tus Sueños.</p>
+    <a href="Catalogo.html" class="btn-cta">Ver mas obciones</a>
+  </section>
+
+<main class="contenido">
     <section class="form-box">
       <h2>Simulador de Financiamiento</h2>
       <p>Calcula tu cuota mensual en pesos dominicanos.</p>
@@ -206,6 +236,16 @@
     </section>
   </main>
 
+
+
+ <div class="hero-content">
+        <div class="hero-buttons">
+          <a href="#" class="btn-hero">Agendar Cita</a>
+          <a href="#" class="btn-hero">Conocer Más</a>
+          <a href="#" class="btn-hero">Agendar Test Drive</a>
+        </div>
+      </div>
+
   <footer>
     <p>&copy; 2025 SOLO HYUNDAI - Todos los derechos reservados</p>
     <div class="social-footer">
@@ -215,6 +255,65 @@
       <a href="#"><i class="fab fa-youtube"></i></a>
     </div>
   </footer>
+
+  <script>
+    const modelos = {
+      "Hyundai Santa Fe": { precioUSD: 37000, inicialUSD: 5000 },
+      "Hyundai Tucson": { precioUSD: 32000, inicialUSD: 4000 },
+      "Hyundai Elantra": { precioUSD: 26000, inicialUSD: 3000 },
+      "Hyundai Grand i10": { precioUSD: 17000, inicialUSD: 2000 },
+      "Hyundai Palisade": { precioUSD: 45000, inicialUSD: 6000 }
+    };
+
+    const bancos = {
+      "Banreservas": 11.5,
+      "Popular": 12.0,
+      "BHD": 12.5,
+      "Scotiabank": 13.0,
+      "APAP": 11.8
+    };
+
+    const tasaCambio = 59.75; // tasa dólar actual (modificable)
+
+    function actualizarModelo() {
+      const modelo = document.getElementById('modelo').value;
+      if (modelo && modelos[modelo]) {
+        const montoRD = modelos[modelo].precioUSD * tasaCambio;
+        const inicialRD = modelos[modelo].inicialUSD * tasaCambio;
+        document.getElementById('monto').value = (montoRD - inicialRD).toFixed(2);
+        document.getElementById('inicial').value = inicialRD.toFixed(2);
+      }
+    }
+
+    function actualizarTasa() {
+      const banco = document.getElementById('banco').value;
+      if (banco && bancos[banco]) {
+        document.getElementById('interes').value = bancos[banco];
+      }
+    }
+
+    function setPlazo(valor) {
+      document.getElementById('plazo').value = valor * 12;
+    }
+
+    function calcularCuota() {
+      const monto = parseFloat(document.getElementById('monto').value);
+      const tasa = parseFloat(document.getElementById('interes').value) / 100 / 12;
+      const plazo = parseInt(document.getElementById('plazo').value);
+
+      if (monto && tasa && plazo) {
+        const cuota = (monto * tasa) / (1 - Math.pow(1 + tasa, -plazo));
+        document.getElementById('resultado').textContent = 'Cuota mensual: RD$ ' + cuota.toFixed(2);
+      } else {
+        document.getElementById('resultado').textContent = 'Por favor, complete todos los campos.';
+      }
+    }
+  </script>
+
+
+
+
+
 
 </body>
 </html>
