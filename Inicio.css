@@ -1,9 +1,9 @@
-
 /* ==================
    ESTILOS - INICIO
    ================== */
 
 /* Reset general */
+
 * {
   margin: 0;
   padding: 0;
@@ -12,6 +12,7 @@
 
 body {
   font-family: 'Segoe UI', sans-serif;
+  line-height: 1.6;
   background-color: #f2f6fa;
   color: #2B414D;
 }
@@ -51,13 +52,13 @@ header p {
 .social-header {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
-  padding-bottom: 5px;
+  gap: 15px;
+  padding-bottom: 10px;
 }
 
 .social-header a {
   color: #ffffff;
-  font-size: 18px;
+  font-size: 1rem;
   transition: color 0.3s ease;
 }
 
@@ -65,44 +66,125 @@ header p {
   color: #00a9e0;
 }
 
-nav ul {
-  list-style: none;
-  background-color: #004c97;
+.logo-title {
   display: flex;
-  justify-content: center;
-  padding: 0;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
-nav ul li {
-  padding: 15px 25px;
+.logo-title img {
+  width: 80px;
+  height: auto;
 }
 
-nav ul li a {
+.logo-title h1 {
+  font-size: 1.5rem;
+}
+
+.logo-title p {
+  font-size: 0.9rem;
+}
+
+.navbar {
+  background-color: #16355f;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  color: white;
+  cursor: pointer;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 15px;
+}
+
+.nav-menu li a {
   color: white;
   text-decoration: none;
   font-weight: bold;
-  font-size: 1rem;
-  transition: color 0.3s ease;
+  padding: 10px 15px;
+  display: block;
 }
 
-nav ul li a:hover {
-  color: #00a9e0;
+.nav-menu li a:hover,
+.nav-menu li a.active {
+  background-color: #1e4a7b;
+  border-radius: 5px;
 }
 
+/* RESPONSIVE MENU PARA MÓVILES Y TABLETS */
 
+/* Menu Hamburguesa Responsive */
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-menu {
+    flex-direction: column;
+    background-color: #16355f;
+    position: absolute;
+    top: 31%; /* Justo debajo del nav-container */
+    left: 25%;
+    transform: translateX(-50%);
+    width: 50%; /* No ocupa todo el ancho */
+    display: none;
+    border-radius: 10px;
+    padding: 10px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    z-index: 999;
+    align-items:first baseline; /* Alinea elementos al final (derecha) */
+    text-align: right; /* Justifica el texto e íconos a la derecha */
+  }
+
+  .nav-menu.active {
+    display: flex;
+  }
+
+  .nav-menu li {
+    text-align: center;
+    margin: 10px 0;
+  }
+}
+
+  .nav-menu li a i {
+    margin-right: 8px;
+    font-size: 1rem;
+    vertical-align: middle;
+  }
+
+  
 /* =========================
    ESTILOS - HERO / SECTION
    ========================= */
 
 .hero {
-  background: url("img/Inicio/Interior.png");
-  background-size: cover;
-  background-position:top;
-  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;                             /* 100% de la altura de la ventana */
+  background: url("img/Inicio/Interior.png") no-repeat center center;
+  background-size: cover;                    /* llena todo el contenedor (corta un poco) */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;                   /* centra verticalmente el contenido */
+  align-items: center;                       /* centra horizontalmente */
+  padding: 0 20px;                            /* algo de espacio lateral */
+  box-sizing: border-box;
   color: white;
   text-align: center;
-  padding: 6rem 3rem;
-  position: relative;
 }
 
 .hero::before {
@@ -111,50 +193,51 @@ nav ul li a:hover {
   top: 0; left: 0;
   width: 100%; height: 100%;
   background-color: rgba(0,0,0,0.5);
+  pointer-events: none;
 }
 
 .hero-content {
-  position: relative;
+  position: relative;                        /* para que no lo cubra el overlay */
   z-index: 1;
 }
 
 .hero h1 {
   font-size: 2.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 15px;
 }
 
 .hero p {
   font-size: 1.2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 20px;
 }
+
 
 .hero-buttons {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
-  margin-top: 1.5rem;
+
 }
 
 .btn-hero {
   background-color: #00a9e0;
   color: white;
-  padding: 12px 20px;
-  border-radius: 30px;
+  padding: 12px 25px;
+  border-radius: 5px;
   font-weight: bold;
   text-decoration: none;
   transition: background-color 0.3s ease;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.btn-hero:hover {
-  background-color: #007bbd;
+.btn-hero.btn-outline {
+  background-color: transparent;
+  border: 2px solid white;
 }
 
-.btn-outline {
-  background-color: transparent;
-  border: 2px solid #00a9e0;
-  color: #00a9e0;
+.btn-hero:hover {
+  background-color: #007bbd;
 }
 
 .btn-outline:hover {
@@ -199,23 +282,6 @@ nav ul li a:hover {
 
 .texto-slide p {
   font-size: 1.2rem;
-}
-
-/* Texto personalizado por slide */
-
-.slide:nth-child(3) .texto-slide {
-  bottom: 50%;
-  left: 08%;
-  transform:none;
-  text-align: left;
-}
-
-.slide:nth-child(4) .texto-slide {
-  bottom: 20%;
-  left: auto;
-  right: 05%;
-  transform: none;
-  text-align: left;
 }
 
 /* =========================
@@ -307,12 +373,14 @@ main {
 .publicidad h2 {
   color: #002c5f;
   font-size: 2rem;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .publicidad p {
   color: #475f6c;
   font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto;
 }
 
 /* =========================
@@ -347,3 +415,232 @@ footer p {
   margin: 10px 0;
   font-size: 0.95rem;
 }
+
+
+/* ========== CARRUSEL SUPERPUESTO 3D ========== */
+
+.gallery-container {
+  padding: 50px 0;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+  perspective: 1200px;
+}
+
+/* ========== CONTENEDOR DE BLOQUES ========= */
+
+.galleries-grid {
+  display: flex;
+  justify-content: space-evenly;    /* espaciado uniforme */
+  align-items: flex-start;          /* alineados arriba para más “aire” abajo */
+  flex-wrap: nowrap;
+  overflow-x: auto;                 /* scroll si hay exceso */
+  padding: 30px 10px;               /* más espacio arriba/abajo, menos a los lados */
+  margin-bottom: 40px;              /* separación de la siguiente sección */
+  box-sizing: border-box;
+  max-width: 100%;
+  height: 300px;                    /* más espacio vertical */
+}
+
+/* Evitar que los bloques sobrepasen el ancho */
+
+.gallery-block {
+  flex: 0 0 22%;                    /* 4 bloques caben sin salirse */
+  max-width: 22%;
+  margin: 0 1%;                     /* gap lateral */
+  box-sizing: border-box;
+}
+
+/* Titulos centrados */
+.gallery-block .gallery-title {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.gallery-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: #00a9e0;
+  margin: 8px auto 0;
+}
+
+
+/* ========== CARRUSEL 3D ========= */
+
+.gallery-block .gallery {
+  position: relative;
+  width: 100%;
+  height: 220px;                    /* más alto para respirar */
+  perspective: 1200px;
+  overflow: visible;
+  margin-top: 10px;
+}
+
+.gallery-block .gallery img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 4px solid #fff;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  transform-origin: center center;
+  animation: carousel-seq 25s ease-in-out infinite;
+}
+
+/* Desfase para cada imagen (asume 5 imágenes por bloque) */
+.gallery-block .gallery img:nth-child(1) { animation-delay: 0s;   }
+.gallery-block .gallery img:nth-child(2) { animation-delay: -5s; }
+.gallery-block .gallery img:nth-child(3) { animation-delay: -10s;}
+.gallery-block .gallery img:nth-child(4) { animation-delay: -15s;}
+.gallery-block .gallery img:nth-child(5) { animation-delay: -20s;}
+
+/* Reproduce todas las imágenes de forma secuencial */
+/* ======= ANIMACIÓN SECUENCIAL COMPLETA ======= */
+@keyframes carousel-seq {
+  0%,100%   { transform: translate(-50%,-50%) translateZ(300px) rotateY(0deg);   z-index:5;   opacity:1; }
+  20%       { transform: translate(-50%,-50%) translateZ(0px)   rotateY(72deg);  z-index:4;   opacity:0.8; }
+  40%       { transform: translate(-50%,-50%) translateZ(-300px) rotateY(144deg); z-index:3;  opacity:0.6; }
+  60%       { transform: translate(-50%,-50%) translateZ(0px)   rotateY(216deg); z-index:2;   opacity:0.8; }
+  80%       { transform: translate(-50%,-50%) translateZ(300px) rotateY(288deg); z-index:4;   opacity:1; }
+}
+
+/* Aplica esta animación a cada img con delay */
+.gallery-block .gallery img {
+  animation-name: carousel-seq;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+/* Posiciones iniciales para 5 imágenes */
+.gallery img:nth-child(1) { animation-delay: 0s;   }
+.gallery img:nth-child(2) { animation-delay: -3s; }
+.gallery img:nth-child(3) { animation-delay: -6s; }
+.gallery img:nth-child(4) { animation-delay: -9s; }
+.gallery img:nth-child(5) { animation-delay: -12s;}
+
+/* ======= SEPARACIÓN DEL SIGUIENTE BLOQUE ======= */
+section + .other-section {
+  margin-top: 60px;                /* nunca invade lo siguiente */
+}
+
+
+/* Animación en 3D */
+@keyframes carousel {
+  0% {
+    transform: translate(-50%, -50%) translateZ(400px) rotateY(0deg);
+    z-index: 5; opacity: 1;
+  }
+  20% {
+    transform: translate(-50%, -50%) translateZ(0px)   rotateY(60deg);
+    z-index: 4; opacity: 0.8;
+  }
+  40% {
+    transform: translate(-50%, -50%) translateZ(-400px) rotateY(120deg);
+    z-index: 3; opacity: 0.6;
+  }
+  60% {
+    transform: translate(-50%, -50%) translateZ(0px)   rotateY(180deg);
+    z-index: 2; opacity: 0.8;
+  }
+  80% {
+    transform: translate(-50%, -50%) translateZ(400px) rotateY(240deg);
+    z-index: 4; opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) translateZ(400px) rotateY(360deg);
+    z-index: 5; opacity: 1;
+  }
+}
+
+/* Pausar al hover */
+.gallery-block .gallery:hover img {
+  animation-play-state: paused;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .gallery {
+    height: 160px;
+  }
+  .gallery img {
+    width: 180px;
+    height: 120px;
+  }
+  .gallery-title {
+    font-size: 2rem;
+  }
+}
+
+/* ======= RESPONSIVE: BLOQUES VERTICALES EN TABLETS/MÓVILES ======= */
+
+@media (max-width: 1024px) {
+  .galleries-grid {
+    flex-direction: column;    /* apila bloques verticalmente */
+    align-items: center;       /* centrar cada bloque */
+    height: auto;              /* altura automática según contenido */
+    padding: 20px 10px;        /* un poco de espacio */
+  }
+  .gallery-block {
+    flex: 0 0 auto;            /* tamaño según contenido */
+    max-width: 100%;           /* ocupan todo el ancho disponible */
+    margin: 0 0 30px;          /* espacio abajo entre bloques */
+  }
+  .gallery-block:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
+/* ==========================
+   CONTENEDOR HORIZONTAL
+=========================== */
+
+/* Scrollbar más discreto */
+.galleries-grid::-webkit-scrollbar {
+  height: 6px;
+}
+.galleries-grid::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+/* Ajustes de título dentro de cada bloque */
+
+.gallery-block .gallery-title {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Reutilizamos tu carrusel 3D dentro de cada bloque */
+.gallery-block .gallery {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  perspective: 1200px;
+  overflow: visible;
+}
+
+.gallery-block .gallery img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 4px solid #fff;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  transform-origin: center center;
+  animation: carousel 15s linear infinite;
+}
+
+.gallery-block .gallery:hover img {
+  animation-play-state: paused;
+}
+
+
