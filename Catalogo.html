@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SOLO HYUNDAI - Distribuidor Autorizado</title>
+  <title>Catálogo Interactivo Hyundai</title>
   <link rel="stylesheet" href="Catalogo.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
 </head>
-
 <body>
+
+  <!-- HEADER -->
   <header>
     <div class="social-header">
       <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -20,7 +20,7 @@
       <a href="#"><i class="fab fa-youtube"></i></a>
     </div>
     <div class="logo-title">
-      <img src="img/Logo.png" class="logo-hyundai" alt="Hyundai Logo" />
+      <img src="img/Logo.png" alt="Hyundai Logo" class="logo-hyundai" />
       <div>
         <h1>SOLO HYUNDAI</h1>
         <p>Distribuidor Autorizado Hyundai en RD</p>
@@ -28,60 +28,352 @@
     </div>
   </header>
 
-  <nav>
-    <ul>
-      <li><a href="index.html">Inicio</a></li>
-      <li><a href="Catalogo.html"class="active">Catálogo</a></li>
-      <li><a href="Financiamiento.html">Financiamiento</a></li>
-      <li><a href="Servicios.html">Servicios</a></li>
+  <!-- ======= NAVEGACIÓN ======= -->
+     
+ <nav class="navbar">
+  <div class="nav-container">
+    <div class="menu-toggle" id="mobile-menu"><i class="fas fa-bars"></i>
+    </div>
+    <ul class="nav-menu">
+      <li><a href="index.html"><i class="fa-car-side"></i>Inicio</a></li>
+      <li><a href="Catalogo.html"class="active"><i class="fas fa-car"></i> Catálogo</a></li>
+      <li><a href="Financiamiento.html"><i class="fas fa-hand-holding-usd"></i> Financiamiento</a></li>
+      <li><a href="Servicios.html"><i class="fas fa-tools"></i> Servicios</a></li>
     </ul>
-  </nav>
+  </div>
+</nav>
 
-<section class="hero-servicios">
+<script>
+  // Seleccionamos el botón hamburguesa y el menú
+
+  const mobileMenuBtn = document.getElementById('mobile-menu');
+  const navMenu       = document.querySelector('.nav-menu');
+
+  // Al hacer clic, alternamos la clase 'active' en el menú
+  
+  mobileMenuBtn.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
+</script>
+
+
+  <!-- ======= SECCIÓN HERO ======= -->
+
+ <section class="hero">
     <div class="hero-content">
       <h1>Descubre la Nueva Generación Hyundai</h1>
-      <p>Diseño, tecnología y rendimiento excepcionales en cada modelo. Vive la experiencia de manejar un Hyundai hoy mismo.</p>
+      <p>Diseño, tecnología y rendimiento excepcionales en cada modelo.</p>
     </div>
   </section>
 
-  <section class="galeria">
-    <h2>Modelos Destacados</h2>
-    <div class="contenedor-galeria">
+            <!-- FILTROS -->
+    <!-- Barra superior de categorías -->
 
-      <div class="vehiculo-img">
-        <h2>PALISADE</h2>
-        <p>Con su diseño intrepido, hecha para aquellos que son diferentes, que rompen con lo rutinario al conducir tener la sensacion de relajarce y alejarse de todo.</p>
-        <a href="https://hyundai.com.do/palisade/" target="_blank">
-        <img src="img/Catalogo/Palisade.jfif" alt="Hyundai Palisade" /></p>
-        </a>
-      </div>
+   <div class="tipo-vehiculo-bar">
+
+    <button class="tipo-btn active" data-tipo="SUV">🚙 SUVs</button>
+    <button class="tipo-btn" data-tipo="CARRO">🚗 CARRO</button>
+    <button class="tipo-btn" data-tipo="COMERCIAL">🚛 COMERCIAL</button>
+  </div>
 
 
-     <div class="vehiculo-img">
-        <h2>SANTA FE</h2>
-        <p>La Hyundai Santa Fe es el resultado de una armoniosa combinación de espacio, comodidad, diseño y acabados de calidad.</p>
-          <a href="https://hyundai.com.do/nueva-santa-fe/" target="_blank">
-        <img src="img/Catalogo/Santa Fe.jfif" alt="Hyundai Santa Fe" /></p>
-        </a>
-     </div>
+  <!-- BARRA HORIZONTAL DE MINIATURAS -->
+  <div class="barra-modelos" id="barra-modelos"></div>
 
-      <div class="vehiculo-img">
-        <h2>TUCSON</h2>
-        <p>La nueva TUCSON establece el estándar para los SUV, diseño innovador con valor por encima y más allá de su clase.</p>
-        <a href="https://hyundai.com.do/tucson/" target="_blank">
-        <img src="img/Catalogo/Tucson.jfif" alt="Hyundai Tucson" /></p>
-        </a>
-     </div>
+  <!-- DETALLE + FLIPBOOK -->
+ <div class="detalle-modelo">
+  <div id="flipbook" class="flipbook"></div>
+</div>
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+
+
+
+  <script>
+    const tipoBtns = document.querySelectorAll('.tipo-btn');
+    const barraModelos = document.getElementById('barra-modelos');
+    const flipbook = document.getElementById('flipbook');
+
+    const modelos = {
+      Palisade: {
+        tipo: 'SUV',
+        desc: 'SUV de lujo con 3 filas de asientos.',
+        img: 'img/Catalogo/SUVs/Palisade/Hyundai-Palisade-2024.png',
+        link: 'https://hyundai.com.do/palisade/',
+        pages: [
+          { tipo: 'portada', titulo: 'Hyundai Palisade', texto: 'Un SUV que redefine el lujo y la elegancia familiar', imagen: 'img/Inicio/Palisade.png' },
+          { tipo: 'contenido', titulo: 'Descubre la Palisade', texto: 'Con un diseño robusto y elegante...', imagen: 'img/Catalogo/Palisade/detalle-parrilla-frontal-hyundai-palisade-768x536.jpeg' },
+          { tipo: 'contenido', titulo: 'Interior Premium', texto: 'Asientos de cuero Nappa...', imagen: 'img/Catalogo/SUVs/Palisade/Interior-Panorami.png' },
+          { tipo: 'contenido', titulo: 'Tecnología de Punta', texto: 'Hyundai SmartSense...', imagen: 'img/palisade/tecnologia.jpg' },
+          { tipo: 'especificaciones', titulo: 'Especificaciones Técnicas', texto: '', imagen: 'img/palisade/lateral.jpg', specs: ['Motor: V6 3.8L GDI', 'Potencia: 291 HP', 'Transmisión: Automática de 8 velocidades', 'Capacidad: Hasta 8 pasajeros', 'Consumo combinado: 10.5 km/l'] },
+          { tipo: 'contenido', titulo: 'Seguridad Hyundai SmartSense', texto: 'Cuenta con asistente de mantenimiento...', imagen: 'img/Catalogo/SUVs/Palisade/Moderna-Pantalla-de-Asistencia.png' },
+          { tipo: 'galeria', titulo: 'Galería Visual', imagenes: 
+                                    ['img/Catalogo/Galeria-de-Fotos/Palisade/image(1).png', 
+                                    'img/Catalogo/Galeria-de-Fotos/Palisade/image(2).png', 
+                                    'img/Catalogo/Galeria-de-Fotos/Palisade/image(3).png', 
+                                    'img/Catalogo/Galeria-de-Fotos/Palisade/image(4).png',
+                                    'img/Catalogo/Galeria-de-Fotos/Palisade/image(5).png'] },
+
+          { tipo: 'contacto', titulo: 'Solicita tu Test Drive', texto: 'Haz clic en el botón para agendar una cita y vivir la experiencia Hyundai Palisade.' } 
+        ]
+      },
+
+      SantaFe: {
+        tipo: 'SUV',
+        desc: 'SUV sofisticado para la familia moderna.',
+        img: 'img/Catalogo/SUVs/Santa Fe/Hyundai-Santa-Fe-2024_.png',
+        link: 'https://hyundai.com.do/santa-fe/',
+        pages: [
+          { tipo: 'portada', titulo: 'Hyundai Santa Fe', texto: 'Comodidad, potencia y estilo en un solo vehículo', imagen: 'img/Catalogo/SantaFe/portada.jpg' },
+          { tipo: 'contenido', titulo: 'Diseño Exterior', texto: 'Elegante y robusto con parrilla imponente.', imagen: 'img/Catalogo/SantaFe/exterior.jpg' },
+          { tipo: 'contenido', titulo: 'Interior Espacioso', texto: 'Asientos amplios, materiales suaves y pantalla táctil.', imagen: 'img/Catalogo/SantaFe/interior.jpg' },
+          { tipo: 'contenido', titulo: 'Tecnología Avanzada', texto: 'Panel digital, conectividad completa y carga inalámbrica.', imagen: 'img/Catalogo/SantaFe/tecnologia.jpg' },
+          { tipo: 'especificaciones', titulo: 'Especificaciones Técnicas', texto: '', imagen: 'img/Catalogo/SantaFe/lateral.jpg', specs: ['Motor: 2.5L Turbo', 'Potencia: 277 HP', 'Transmisión: Automática 8 vel.', 'Capacidad: 7 pasajeros', 'Consumo: 11 km/l'] },
+          { tipo: 'galeria', titulo: 'Galería Visual', imagenes: ['img/Catalogo/SantaFe/gal1.jpg', 'img/Catalogo/SantaFe/gal2.jpg'] },
+          { tipo: 'contacto', titulo: 'Solicita tu Test Drive', texto: 'Descubre la emoción de conducir una Santa Fe.' }
+        ]
+      },
+
+      Tucson: {
+        tipo: 'SUV',
+        desc: 'Versátil, moderno y seguro.',
+        img: 'img/Catalogo/SUVs/Tucson/Hyundai-Tucson-2024.png',
+        link: 'https://hyundai.com.do/tucson/',
+        pages: [
+          { tipo: 'portada', titulo: 'Hyundai Tucson', texto: 'Innovación, diseño y rendimiento.', imagen: 'img/Catalogo/Tucson/portada.jpg' },
+          { tipo: 'contenido', titulo: 'Diseño Vanguardista', texto: 'Líneas modernas y faros LED dinámicos.', imagen: 'img/Catalogo/Tucson/exterior.jpg' },
+          { tipo: 'contenido', titulo: 'Confort Interior', texto: 'Tecnología intuitiva y asientos ergonómicos.', imagen: 'img/Catalogo/Tucson/interior.jpg' },
+          { tipo: 'especificaciones', titulo: 'Especificaciones Técnicas', texto: '', imagen: 'img/Catalogo/Tucson/lateral.jpg', specs: ['Motor: 2.0L MPi', 'Potencia: 156 HP', 'Transmisión: Automática 6 vel.', 'Capacidad: 5 pasajeros', 'Consumo: 13.5 km/l'] },
+          { tipo: 'galeria', titulo: 'Galería Visual', imagenes: ['img/Catalogo/Tucson/gal1.jpg', 'img/Catalogo/Tucson/gal2.jpg'] },
+          { tipo: 'contacto', titulo: 'Solicita tu Test Drive', texto: '¡Experimenta la Tucson hoy mismo!' }
+        ]
+      }, 
+
+      Kona: {
+          tipo: 'SUV',
+          desc: 'SUV compacto con diseño vanguardista y tecnología avanzada.',
+          img: 'img/Catalogo/SUVs/Kona/Kona.png',
+          link: 'https://hyundai.com.do/kona/',
+          pages: [
+            { tipo: 'portada', titulo: 'Hyundai Kona', texto: 'Un SUV urbano con diseño atrevido y carácter deportivo.', imagen: 'img/Catalogo/Kona/portada.jpg' },
+            { tipo: 'contenido', titulo: 'Diseño Exterior', texto: 'Frontal dinámico, luces LED y estilo único.', imagen: 'img/Catalogo/Kona/exterior.jpg' },
+            { tipo: 'contenido', titulo: 'Interior Inteligente', texto: 'Pantalla de 10.25", conectividad completa y espacio optimizado.', imagen: 'img/Catalogo/Kona/interior.jpg' },
+            { tipo: 'especificaciones', titulo: 'Especificaciones Técnicas', texto: '', imagen: 'img/Catalogo/Kona/lateral.jpg', specs: ['Motor: 2.0L MPI', 'Potencia: 147 HP', 'Transmisión: Automática 6 vel.', 'Capacidad: 5 pasajeros', 'Consumo combinado: 13 km/l'] },
+            { tipo: 'galeria', titulo: 'Galería Visual', imagenes: ['img/Catalogo/Kona/gal1.jpg', 'img/Catalogo/Kona/gal2.jpg'] },
+            { tipo: 'contacto', titulo: 'Solicita tu Test Drive', texto: 'Experimenta el diseño y agilidad de la Hyundai Kona.' }
+          ]
+        },
+
+        Cantus: {
+          tipo: 'SUV',
+          desc: 'Sedán moderno, espacioso y eficiente.',
+          img: 'img/Catalogo/SUVs/Cantus/Hyundai-Cantus-2024.png',
+          link: 'https://hyundai.com.do/cantus/',
+          pages: [
+            { tipo: 'portada', titulo: 'Hyundai Cantus', texto: 'Espacio, confort y diseño en perfecta armonía.', imagen: 'img/Catalogo/Cantus/portada.jpg' },
+            { tipo: 'contenido', titulo: 'Diseño Refinado', texto: 'Líneas elegantes y presencia sofisticada.', imagen: 'img/Catalogo/Cantus/exterior.jpg' },
+            { tipo: 'contenido', titulo: 'Cabina Confortable', texto: 'Asientos amplios, consola moderna y tecnología práctica.', imagen: 'img/Catalogo/Cantus/interior.jpg' },
+            { tipo: 'especificaciones', titulo: 'Especificaciones Técnicas', texto: '', imagen: 'img/Catalogo/Cantus/lateral.jpg', specs: ['Motor: 1.5L MPi', 'Potencia: 113 HP', 'Transmisión: Automática', 'Capacidad: 5 pasajeros', 'Consumo combinado: 14 km/l'] },
+            { tipo: 'galeria', titulo: 'Galería Visual', imagenes: ['img/Catalogo/Cantus/gal1.jpg', 'img/Catalogo/Cantus/gal2.jpg'] },
+            { tipo: 'contacto', titulo: 'Solicita tu Test Drive', texto: 'Ven y maneja el nuevo Hyundai Cantus.' }
+          ]
+        },
+
+        CantusLX: {
+          tipo: 'SUV',
+          desc: 'La versión más equipada del Cantus con detalles premium.',
+          img: 'img/Catalogo/SUVs/Cantus LX/Hyundai-Cantus-LX-2024.png',
+          link: 'https://hyundai.com.do/cantus/',
+          pages: [
+            { tipo: 'portada', titulo: 'Hyundai Cantus LX', texto: 'Elegancia y tecnología premium para el día a día.', imagen: 'img/Catalogo/CantusLX/portada.jpg' },
+            { tipo: 'contenido', titulo: 'Exterior Moderno', texto: 'Rines de lujo, luces LED y estilo sobrio.', imagen: 'img/Catalogo/CantusLX/exterior.jpg' },
+            { tipo: 'contenido', titulo: 'Equipamiento Superior', texto: 'Pantalla de infoentretenimiento, acabados premium.', imagen: 'img/Catalogo/CantusLX/interior.jpg' },
+            { tipo: 'especificaciones', titulo: 'Especificaciones Técnicas', texto: '', imagen: 'img/Catalogo/CantusLX/lateral.jpg', specs: ['Motor: 1.5L MPi', 'Potencia: 113 HP', 'Transmisión: Automática', 'Asistentes avanzados', 'Consumo: 14 km/l'] },
+            { tipo: 'galeria', titulo: 'Galería Visual', imagenes: ['img/Catalogo/CantusLX/gal1.jpg', 'img/Catalogo/CantusLX/gal2.jpg'] },
+            { tipo: 'contacto', titulo: 'Solicita tu Test Drive', texto: 'Explora el lujo accesible con el Cantus LX.' }
+          ]
+        },
+
+
+        Venue: {
+          tipo: 'SUV',
+          desc: 'Compacto, urbano y lleno de estilo juvenil.',
+          img: 'img/Catalogo/SUVs/Venue/Hyudai-Venue-2024.png',
+          link: 'https://hyundai.com.do/venue/',
+          pages: [
+            { tipo: 'portada', titulo: 'Hyundai Venue', texto: 'Diseñado para la ciudad con estilo y practicidad.', imagen: 'img/Catalogo/Venue/portada.jpg' },
+            { tipo: 'contenido', titulo: 'Diseño Único', texto: 'SUV pequeño, gran actitud. Parrilla atrevida y perfil moderno.', imagen: 'img/Catalogo/Venue/exterior.jpg' },
+            { tipo: 'contenido', titulo: 'Comodidad Urbana', texto: 'Tecnología, visibilidad y conectividad.', imagen: 'img/Catalogo/Venue/interior.jpg' },
+            { tipo: 'especificaciones', titulo: 'Especificaciones Técnicas', texto: '', imagen: 'img/Catalogo/Venue/lateral.jpg', specs: ['Motor: 1.6L MPI', 'Potencia: 121 HP', 'Transmisión: Automática CVT', 'Capacidad: 5 pasajeros', 'Consumo: 15 km/l'] },
+            { tipo: 'galeria', titulo: 'Galería Visual', imagenes: ['img/Catalogo/Venue/gal1.jpg', 'img/Catalogo/Venue/gal2.jpg'] },
+            { tipo: 'contacto', titulo: 'Solicita tu Test Drive', texto: 'Ideal para moverte con estilo por la ciudad.' }
+          ]
+        },
       
-     <div class="vehiculo-img">
-        <h2>KONA</h2>
-        <p>El nuevo KONA Híbrido redefine el estándar de un SUV compacto, con un diseño interior y exterior orientado al futuro.</p>
-        <a href="https://hyundai.com.do/kona/" target="_blank">
-      <img src="img/Catalogo/Kona.jfif" alt="Kona" />
-        </a>
-    </div>
 
-  </section>
+        Grandi10: {
+          tipo: 'CARRO',
+          desc: 'Pequeño y ágil ideal para la ciudad.',
+          img: 'img/Catalogo/Carros/Grand i10.png',
+          link: 'https://www.hyundai.com.do/grand-i10/',
+          pages: [
+            { tipo: 'portada', titulo: 'Hyundai Grand i10', texto: 'Compacto con estilo juvenil.',imagen: 'https://www.hyundai.com/content/dam/hyundai/ww/grandi10/2025/Global/images/desktop/exterior/1_images_gl.jpg' },
+            { tipo: 'contenido', titulo: 'Diseño exterior', texto: 'Faros dinámicos y líneas fluidas.',imagen: 'https://www.hyundai.com/content/dam/hyundai/ww/grandi10/2025/Global/images/desktop/exterior/2_images_gl.jpg' },
+            { tipo: 'contenido', titulo: 'Interior funcional', texto: 'Pantalla táctil y conectividad moderna.',imagen: 'https://www.hyundai.com/content/dam/hyundai/ww/grandi10/2025/Global/images/desktop/interior/3_images_gl.jpg' },
+            { tipo: 'especificaciones', titulo: 'Ficha técnica', texto: '', specs: ['Motor: 1.2 L MPI','Potencia: ~83 HP','Transmisión: Manual o Automática','Consumo combinado: ~18 km/l']},
+            { tipo: 'galeria', titulo: 'Galería visual', imagenes: ['https://www.hyundai.com/content/dam/hyundai/ww/grandi10/2025/Global/images/desktop/exterior/3_images_gl.jpg','https://www.hyundai.com/content/dam/hyundai/ww/grandi10/2025/Global/images/desktop/interior/4_images_gl.jpg']},
+            { tipo: 'contacto', titulo: 'Solicita tu prueba', texto: 'Experimenta toda su versatilidad.' }
+          ]
+        },
+
+
+        
+        Accent: {
+          tipo: 'CARRO',
+          desc: 'Sedán compacto, eficiente y con estilo moderno.',
+          img: 'img/Catalogo/Carros/Accent.png',
+          link: 'https://www.hyundai.com.do/accent/',
+          pages: [
+            { tipo: 'portada', titulo: 'Hyundai Accent', texto: 'Diseño compacto con espíritu urbano.', imagen: 'https://www.hyundai.com/content/dam/hyundai/ww/accent/2025/exterior/1_images_gl.jpg' },
+            { tipo: 'contenido', titulo: 'Interior moderno', texto: 'Confort y conectividad para tu día a día.', imagen: 'https://www.hyundai.com/content/dam/hyundai/ww/accent/2025/interior/2_images_gl.jpg' },
+            { tipo: 'especificaciones', titulo: 'Ficha técnica', texto: '', specs: ['Motor: 1.6 L MPI','Potencia: 120 HP','Transmisión: Automática o manual','Consumo combinado: ~16 km/l']},
+            { tipo: 'galeria', titulo: 'Galería Visual', imagenes: ['https://www.hyundai.com/content/dam/hyundai/ww/accent/2025/exterior/3_images_gl.jpg','https://www.hyundai.com/content/dam/hyundai/ww/accent/2025/exterior/4_images_gl.jpg']}
+          ]
+        },
+
+        Staria: {
+          tipo: 'COMERCIAL',
+          desc: 'Minivan premium versátil para turismo o negocios.',
+          img: 'img/Catalogo/Comerciales/Staria.png',
+          link: 'https://www.hyundai.com.do/staria/',
+          pages: [
+            { tipo: 'portada', titulo: 'Hyundai Staria', texto: 'Diseño futurista y espacio ilimitado.',imagen: 'https://www.hyundai.com/content/dam/hyundai/ww/staria/2025/Global/images/desktop/exterior/1_images_gl.jpg' },
+            { tipo: 'contenido', titulo: 'Interior lujoso', texto: 'Diseño tipo salón, ideal para confort ejecutivo.',imagen: 'https://www.hyundai.com/content/dam/hyundai/ww/staria/2025/Global/images/desktop/interior/2_images_gl.jpg' },
+            { tipo: 'especificaciones', titulo: 'Ficha técnica', texto: '', specs: ['Motor: 2.2 L CRDi','Potencia: 177 HP','Transmisión: Automática 8‑vel','Capacidad: hasta 11 personas']},
+            { tipo: 'galeria', titulo: 'Galería visual', imagenes: ['https://www.hyundai.com/content/dam/hyundai/ww/staria/2025/Global/images/desktop/exterior/3_images_gl.jpg','https://www.hyundai.com/content/dam/hyundai/ww/staria/2025/Global/images/desktop/interior/4_images_gl.jpg']},
+            { tipo: 'contacto', titulo: 'Solicita tu cotización', texto: 'Ideal para trasporte ejecutivo.' }
+          ]
+        },
+
+        HD78: {
+          tipo: 'COMERCIAL',
+          desc: 'Camión liviano potente para carga urbana.',
+          img: 'img/Catalogo/Comerciales/HD50-78.png',
+          link: 'https://www.hyundai.com.do/hd78/',
+          pages: [
+            { tipo: 'portada', titulo: 'Hyundai HD78', texto: 'Robusto y confiable para trabajo pesado.',imagen: 'https://www.hyundai.com/content/dam/hyundai/ww/hd78/2025/Global/images/desktop/exterior/1_images_gl.jpg' },
+            { tipo: 'contenido', titulo: 'Cabina espaciosa', texto: 'Visibilidad amplia, ergonomía y confort.',imagen: 'https://www.hyundai.com/content/dam/hyundai/ww/hd78/2025/Global/images/desktop/interior/2_images_gl.jpg' },
+            { tipo: 'especificaciones', titulo: 'Ficha técnica', texto: '', specs: ['Motor: 3.3 L Diesel','Potencia: 140 HP','Capacidad de carga: hasta 3 ton','Transmisión: Manual 6‑vel']},
+            { tipo: 'galeria', titulo: 'Galería visual', imagenes: ['https://www.hyundai.com/content/dam/hyundai/ww/hd78/2025/Global/images/desktop/exterior/3_images_gl.jpg','https://www.hyundai.com/content/dam/hyundai/ww/hd78/2025/Global/images/desktop/interior/4_images_gl.jpg']},
+            { tipo: 'contacto', titulo: 'Solicita tu cotización', texto: 'Perfecto para tu flota comercial.' }
+          ]
+        },
+
+        County: {
+          tipo: 'COMERCIAL',
+          desc: 'Microbús robusto para transporte colectivo.',
+          img: 'img/Catalogo/Comerciales/County.png',
+          link: 'https://www.hyundai.com.do/county/',
+          pages: [
+            { tipo: 'portada', titulo: 'Hyundai County', texto: 'Ideal para transporte urbano y turismo.',imagen: 'https://www.hyundai.com/content/dam/hyundai/ww/county/2025/Global/images/desktop/exterior/1_images_gl.jpg' },
+            { tipo: 'contenido', titulo: 'Capacidad amplia', texto: 'Asientos comodísimos y accesos múltiples.',imagen: 'https://www.hyundai.com/content/dam/hyundai/ww/county/2025/Global/images/desktop/interior/2_images_gl.jpg' },
+            { tipo: 'especificaciones', titulo: 'Ficha técnica', texto: '', specs: ['Motor: 3.9 L Diesel','Potencia: 158 HP','Capacidad: hasta 30 pasajeros','Transmisión: Manual o Automática']},
+            { tipo: 'galeria', titulo: 'Galería visual',imagenes: ['https://www.hyundai.com/content/dam/hyundai/ww/county/2025/Global/images/desktop/exterior/3_images_gl.jpg','https://www.hyundai.com/content/dam/hyundai/ww/county/2025/Global/images/desktop/interior/4_images_gl.jpg']},
+            { tipo: 'contacto', titulo: 'Solicita tu cotización', texto: 'Para tu ruta escolar o empresarial.' }
+          ]
+        },
+
+
+
+
+    };
+
+      function crearThumb(nombre, info) {
+      const div = document.createElement('div');
+      div.className = 'thumb';
+      div.dataset.tipo = info.tipo;
+      div.addEventListener('click', () => cargarFlipbook(nombre));
+      div.innerHTML = `<img src="${info.img}" alt="${nombre}"><span>${nombre}</span>`;
+      barraModelos.appendChild(div);
+    }
+
+    function cargarFlipbook(nombre) {
+      const info = modelos[nombre];
+      flipbook.innerHTML = '';
+      info.pages.forEach(p => {
+        const page = document.createElement('div');
+        page.className = 'page ' + p.tipo;
+        let html = `<h2>${p.titulo}</h2><p>${p.texto || ''}</p>`;
+        if (p.imagen) html += `<img src="${p.imagen}" alt="${p.titulo}"/>`;
+        if (p.specs) html += `<ul>${p.specs.map(s=>`<li>${s}</li>`).join('')}</ul>`;
+        if (p.imagenes) html += `<div class="grid-galeria">${p.imagenes.map(i=>`<img src="${i}"/>`).join('')}</div>`;
+        if (p.tipo==='contacto') html += `<a href="${info.link}" class="btn-contacto">Agendar Test Drive</a>`;
+        page.innerHTML = html;
+        flipbook.appendChild(page);
+      });
+
+      if ($(flipbook).data('turn')) {
+        $(flipbook).turn('destroy');
+      }
+
+      setTimeout(() => {
+        $(flipbook).turn({
+          width: 800,
+          height: 500,
+          autoCenter: true
+        });
+      }, 100);
+
+          }
+ 
+   document.addEventListener('DOMContentLoaded', () => {
+    Object.entries(modelos).forEach(([nombre, info]) => crearThumb(nombre, info));
+
+  const tipoInicial = 'SUV'; // <- Cambia aquí si quieres otro tipo por defecto (ej: 'CARRO' o 'COMERCIAL')
+
+  // Activar botón por defecto
+
+  tipoBtns.forEach(btn => {
+    if (btn.dataset.tipo === tipoInicial) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  // Filtrar los modelos por tipo por defecto
+
+  document.querySelectorAll('.thumb').forEach(t => {
+    t.style.display = (t.dataset.tipo === tipoInicial) ? 'flex' : 'none';
+  });
+
+  // Cargar el primer modelo del tipo seleccionado
+
+  const primerModelo = Object.keys(modelos).find(nombre => modelos[nombre].tipo === tipoInicial);
+  if (primerModelo) {
+    cargarFlipbook(primerModelo);
+  }
+  // Listeners de los botones
+
+      tipoBtns.forEach(btn=>btn.addEventListener('click',()=>{
+        tipoBtns.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const tipo=btn.dataset.tipo;
+        document.querySelectorAll('.thumb').forEach(t=>t.style.display = (tipo==='todos'||t.dataset.tipo===tipo)?'flex':'none');
+
+        // Limpiar flipbook para que no quede información anterior
+      flipbook.innerHTML = '';
+        $('#flipbook').turn('destroy'); // Cierra cualquier instancia activa del flipbook
+      }));
+    });
+  </script>
+
+
+
+
+
 
   <footer>
     <p>&copy; 2025 SOLO HYUNDAI - Todos los derechos reservados</p>
@@ -92,5 +384,8 @@
       <a href="#"><i class="fab fa-youtube"></i></a>
     </div>
   </footer>
+
+
 </body>
+
 </html>
